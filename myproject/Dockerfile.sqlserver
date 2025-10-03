@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/mssql/server:2019-latest
+
+ENV ACCEPT_EULA=Y
+ENV SA_PASSWORD=YourStrong!Passw0rd
+
+USER root
+
+# Instalar sqlcmd y tsql (freetds)
+RUN apt-get update && \
+    apt-get install -y mssql-tools unixodbc-dev freetds-bin && \
+    echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> /etc/bash.bashrc && \
+    rm -rf /var/lib/apt/lists/*
+
+USER mssql

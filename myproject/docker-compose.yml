@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.sqlserver 
+    container_name: sqlserver_dev
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+  web:
+    build: .
+    container_name: django_web
+    depends_on:
+      - db
+    env_file: .env.example
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+    entrypoint: ["/bin/bash", "/code/entrypoint.sh"]
+
+volumes:
+  sqlserver-data:
