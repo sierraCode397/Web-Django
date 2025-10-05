@@ -454,15 +454,15 @@ urlpatterns = [
 
 ```bash
 docker compose up --build
-docker compose down -v
-docker exec -it sqlserver_dev /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'YourStrong!Passw0rd'
 
 ```
 
 4. Entra al contenedor web si necesitas correr comandos manuales:
 
 ```bash
+docker compose down -v
 docker exec -it --user root sqlserver_dev bash
+docker exec -it sqlserver_dev /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'YourStrong!Passw0rd'
 ```
 
 5. Prueba los endpoints:
